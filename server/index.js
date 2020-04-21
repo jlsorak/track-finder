@@ -1,7 +1,7 @@
 const express = require('express')
 const { ApolloServer, gql } = require('apollo-server-express')
 
-const dbConnection = require('./db/connection')
+require('./db/connection')
 const FavouriteTracks = require('./db/models/FavouriteTracks')
 const SpotifyAPI = require('./datasources/SpotifyAPI');
 
@@ -14,8 +14,8 @@ const SpotifyAPI = require('./datasources/SpotifyAPI');
     }
 
     type Mutation {
-      favouriteTrack(trackId: String!): [Track]
-      unfavouriteTrack(trackId: String!): [Track]
+      favouriteTrack(id: String!): Track
+      unfavouriteTrack(id: String!): Track
     }
 
     type Album {
@@ -33,7 +33,7 @@ const SpotifyAPI = require('./datasources/SpotifyAPI');
       album: Album
       artists: [Artist]
       durationMs: Int
-      trackId: String
+      id: String
       name: String
       previewUrl: String,
       uri: String
@@ -49,32 +49,55 @@ const SpotifyAPI = require('./datasources/SpotifyAPI');
   // Resolver functions for our schema fields
   const resolvers = {
     Query: {
-      favouriteTracks: async() => {
+      favouriteTracks: async (parent, {}, { dataSources }) => {
         try {
           const favourites = await FavouriteTracks.find({})
-          return favourites
+          const trackIds = favourites.map((favourite) => favourite.trackId)
+          const tracks = await dataSources.SpotifyAPI.getTracks(trackIds)
+
+          return tracks.map((track) => {
+            const {
+              album,
+              artists,
+              duration_ms: durationMs,
+              id,
+              name,
+              preview_url: previewUrl,
+              uri
+            } = track
+
+            return {
+              album,
+              artists,
+              durationMs,
+              id,
+              name,
+              previewUrl,
+              uri
+            }
+          })
         } catch (error) {
           console.log(error)
         }
       },
       searchTracks: async (parent, { searchTerm }, { dataSources }) => {
-        const tracks = await dataSources.SpotifyAPI.getTracks(searchTerm)
+        const tracks = await dataSources.SpotifyAPI.searchTracks(searchTerm)
         return tracks.map((track) => {
           const {
             album,
             artists,
             duration_ms: durationMs,
-            id: trackId,
+            id,
             name,
             preview_url: previewUrl,
             uri 
           } = track
-          console.log(album.images, 'track>>>>')
+
           return { 
             album,
             artists,
             durationMs,
-            trackId,
+            id,
             name,
             previewUrl,
             uri
@@ -83,20 +106,18 @@ const SpotifyAPI = require('./datasources/SpotifyAPI');
       }
     },
     Mutation: {
-      favouriteTrack: async (parent, { trackId }) => {
+      favouriteTrack: async (parent, { id }) => {
         try {
-          await FavouriteTracks.create({ trackId })
-          const favourites = await FavouriteTracks.find({})
-          return favourites
+          await FavouriteTracks.create({ trackId: id })
+          return { id }
         } catch (error) {
           console.log(error)
         }
       },
-      unfavouriteTrack: async (parent, { trackId }) => {
+      unfavouriteTrack: async (parent, { id }) => {
         try {
-          await FavouriteTracks.deleteOne({ trackId })
-          const favourites = await FavouriteTracks.find({})
-          return favourites
+          await FavouriteTracks.deleteOne({ trackId: id })
+          return { id }
         } catch (error) {
           console.log(error)
         }

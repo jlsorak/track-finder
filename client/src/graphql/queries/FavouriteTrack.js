@@ -1,12 +1,8 @@
 import { gql } from 'apollo-boost';
 
-const SearchTracks = gql`
-  query (
-    $searchTerm: String!
-  ) {
-    searchTracks(
-      searchTerm: $searchTerm
-    ) {
+const FavouriteTracks = gql`
+  query {
+    favouriteTracks {
       id
       name
       artists {
@@ -29,4 +25,4 @@ const SearchTracks = gql`
   }
 `
 
-export default SearchTracks
+export default FavouriteTracks

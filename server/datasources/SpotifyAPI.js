@@ -12,7 +12,7 @@ class SpotifyAPI extends RESTDataSource {
     request.headers.set('Authorization', 'Bearer ' + this.context.spotifyAccessToken)
   }
 
-  async getTracks(searchTerm) {
+  async searchTracks(searchTerm) {
     try {
       const data = await this.get(`search`, {
         q: searchTerm,
@@ -21,6 +21,17 @@ class SpotifyAPI extends RESTDataSource {
       return data.tracks.items
     } catch (error) {
       console.log(error, 'error')
+      throw new Error('Unable to search tracks')
+    }
+  }
+
+  async getTracks(ids) {
+    try {
+      const data = await this.get(`tracks`, { ids })
+      return data.tracks
+    } catch (error) {
+      console.log(error, 'error')
+      throw new Error('Unable to get tracks')
     }
   }
 

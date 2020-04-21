@@ -7,10 +7,11 @@ import Guitarist from '../assets/guitarist.png'
 
 const Header = ({
   searchTracks,
-  searchTracksQueryInfo
+  searchTracksQueryInfo,
+  setShowFavourites
 }) => {
   const favouritesButton = (
-    <button className='bg-white hover:bg-gray-200 font-bold rounded-lg py-2 px-4 float-right inline-flex items-center'>
+    <button className='bg-white hover:bg-gray-200 font-bold rounded-lg py-2 px-4 float-right inline-flex items-center' onClick={() => setShowFavourites(true)}>
       <FaHeart className='mr-1 text-pink-600' />
       My Favourites
     </button>
@@ -41,7 +42,7 @@ const Header = ({
               <FaMusic className='ml-1 text-3xl' />
             </h1>
             <div className='text-white mb-4'>Enter a song title below to search for songs.</div>
-            <SearchForm searchTracks={searchTracks} searchTracksQueryInfo={searchTracksQueryInfo} />
+            <SearchForm searchTracks={searchTracks} searchTracksQueryInfo={searchTracksQueryInfo} setShowFavourites={setShowFavourites} />
           </div>
         </div>
         <div>{imageCredit}</div>
