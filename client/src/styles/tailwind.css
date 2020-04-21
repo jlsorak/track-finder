@@ -1,0 +1,17 @@
+/* purgecss start ignore */
+@tailwind base;
+@tailwind components;
+/* purgecss end ignore */
+@tailwind utilities;
+
+a {
+  text-decoration: underline;
+}
+
+.spotify-preview-player {
+  height: 60px;
+  background-color: white;
+}
+.soptify-preview-player video {
+  width: 100%;
+}
