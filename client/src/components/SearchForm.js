@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-
 import { FaChevronRight} from 'react-icons/fa'
+
+import Alert from './Alert'
 
 const SearchForm = ({ searchTracks, searchTracksQueryInfo = {}, setShowFavourites }) => {
   const [ searchTerm, setSearchTerm ] = useState('')
@@ -12,19 +13,21 @@ const SearchForm = ({ searchTracks, searchTracksQueryInfo = {}, setShowFavourite
   }
   return (
     <form onSubmit={handleFormSubmit}>
-      {searchTracksQueryInfo.error &&
-        <div className='alert' role='alert'>
-          <strong className='font-bold'>Search failed! </strong>
-          <span className='block sm:inline'>We're unable to search that track right now.</span>
-        </div>
-      }
+      {searchTracksQueryInfo.error && (
+        <Alert
+          title='Search failed!'
+          description={'We\'re unable to search that track right now.'}
+        />
+      )}
       <div className='flex'>
         <input
           aria-label='Song title'
+          aria-required
           className='w-full mr-2 md:py-4 md:px-8'
           onChange={e => setSearchTerm(e.target.value)}
-          type='text'
           placeholder='e.g. Bohemian Rhapsody'
+          required
+          type='text'
         />
         <button className='btn-white' disabled={searchTracksQueryInfo.loading}>
           <span>Search</span>

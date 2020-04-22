@@ -6,8 +6,11 @@ import GET_FAVOURITE_TRACKS from '../graphql/queries/FavouriteTrack.js'
 
 import Track from './Track'
 
-const TrackList = ({ searchedTracks, showFavourites }) => {
-  const { data = { favouriteTracks: {} } } = useQuery(GET_FAVOURITE_TRACKS)
+const TrackList = ({ searchedTracks, searchedTracksLoading, showFavourites }) => {
+  const { 
+    loading: favouriteTracksLoading, 
+    data = { favouriteTracks: {} } 
+  } = useQuery(GET_FAVOURITE_TRACKS)
   const favouriteTracks = data.favouriteTracks || []
 
   let listTitle
@@ -21,9 +24,11 @@ const TrackList = ({ searchedTracks, showFavourites }) => {
   }
   if (!tracksToDisplay.length) listTitle = <><FaHeartBroken className='inline-icon-left text-pink-600' /> No songs favourited yet. Make a search above to start finding songs you like.</>
 
+  const isLoading = searchedTracksLoading || favouriteTracksLoading
+
   return (
     <>
-      <h2 className='text-2xl mt-16'>{listTitle}</h2>
+      <h2 className='text-2xl mt-16'>{isLoading ? 'Loading...' : listTitle}</h2>
       {tracksToDisplay.length > 0 && 
         <ul>
           {tracksToDisplay.map((track) => {

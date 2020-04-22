@@ -14,7 +14,7 @@ const App = () => {
     <div>
       <Header searchTracks={searchTracks} searchTracksQueryInfo={{ loading, error }} setShowFavourites={setShowFavourites} />
       <main className='container mx-auto px-4' id='main'>
-        <TrackList searchedTracks={searchedTracks} showFavourites={showFavourites} />
+        <TrackList searchedTracks={searchedTracks} searchedTracksLoading={loading} showFavourites={showFavourites} />
       </main>
     </div>
   )
