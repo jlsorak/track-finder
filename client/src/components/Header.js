@@ -24,16 +24,17 @@ const Header = ({
 
   return (
     <header className='header'>
+      <a className="skip-link bg-white" href='#main'>Skip to content</a>
       <img
         alt='Woman standing watching a LED light display in the shape of various musical instruments.'
         className='absolute object-cover min-w-full'
         src={Guitarist}
       />
       <div className='flex flex-col h-full p-4'>
-        <div>
+        <nav>
           {favouritesButton}
-        </div>
-        <div className='flex self-center items-center h-full md:pl-32 w-full'>
+        </nav>
+        <div className='flex self-center items-center h-full md:pl-32 w-full' role='search'>
           <div className='p-4 rounded-lg md:w-1/2' style={{ backgroundColor: '#18191b' }}>
             <h1 className='text-white'>
               Track finder

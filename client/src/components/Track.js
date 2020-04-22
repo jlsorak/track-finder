@@ -48,7 +48,7 @@ const Track = ({ favouriteTracks, track }) => {
       <div className='flex-shrink-0'>
         <div className='flex items-center'>
           <FavouriteButton isFavourited={isFavourited} name={name} favourite={favourite} unfavourite={unfavourite} />
-          <img src={album.images[1].url}></img> {/* [1] is the 300x300 image */}
+          <img alt={`${album.name} album cover`} src={album.images[1].url}></img> {/* [1] is the 300x300 image */}
         </div>
       </div>
       <div className='md:flex items-start justify-between w-full mx-1 md:m-4'>
