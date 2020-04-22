@@ -7,14 +7,19 @@ import GET_FAVOURITE_TRACKS from '../graphql/queries/FavouriteTrack.js'
 import Track from './Track'
 
 const TrackList = ({ searchedTracks, showFavourites }) => {
-  const { data = [] } = useQuery(GET_FAVOURITE_TRACKS)
-  const favouriteTracks = data.favouriteTracks
-  const tracksToDisplay = showFavourites ? favouriteTracks : searchedTracks
+  const { data = { favouriteTracks: {} } } = useQuery(GET_FAVOURITE_TRACKS)
+  const favouriteTracks = data.favouriteTracks || []
 
   let listTitle
-  if (!tracksToDisplay.length) listTitle = <><FaHeartBroken className='inline text-pink-600 mr-1' /> No songs favourited yet. Make a search above to start finding songs you like.</>
-  else if (showFavourites) listTitle = 'My favourite tracks'
-  else listTitle = 'This is what we found...'
+  let tracksToDisplay = []
+  if (showFavourites || !searchedTracks.length) {
+    tracksToDisplay = favouriteTracks
+    listTitle = 'My favourite tracks'
+  } else {
+    tracksToDisplay = searchedTracks
+    listTitle = 'This is what we found...'
+  }
+  if (!tracksToDisplay.length) listTitle = <><FaHeartBroken className='inline-icon-left text-pink-600' /> No songs favourited yet. Make a search above to start finding songs you like.</>
 
   return (
     <>

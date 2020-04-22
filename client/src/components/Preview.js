@@ -7,7 +7,7 @@ const Preview = ({ previewUrl }) => {
   if (!previewUrl) return <div>Preview unavailable</div>
 
   if (showingTrackPreview) return (
-    <video controls autoPlay className='w-64 h-12' name="media">
+    <video controls autoPlay className='w-64 h-12 bg-white' name="media">
       <source src={previewUrl} type="audio/mpeg" ></source>
     </video>
   )
@@ -15,10 +15,10 @@ const Preview = ({ previewUrl }) => {
   return (
     <button
       onClick={() => setShowingTrackPreview(true)}
-      className='bg-indigo-100 hover:bg-indigo-200 rounded-lg py-2 px-4 inline-flex items-center'
+      className='btn-indigo'
     >
       Preview track
-      <FaPlay className='ml-1 text-xs'/>
+      <FaPlay className='text-xs inline-icon-right'/>
     </button>
   )
 }

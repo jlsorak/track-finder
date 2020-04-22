@@ -12,7 +12,7 @@ const App = () => {
 
   return (
     <div>
-      <Header searchTracks={searchTracks} searchTracksQueryInfo={loading, error} setShowFavourites={setShowFavourites} />
+      <Header searchTracks={searchTracks} searchTracksQueryInfo={{ loading, error }} setShowFavourites={setShowFavourites} />
       <main className='container mx-auto px-4'>
         <TrackList searchedTracks={searchedTracks} showFavourites={showFavourites} />
       </main>

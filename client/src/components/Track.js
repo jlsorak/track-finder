@@ -9,7 +9,7 @@ import UNFAVOURITE_TRACK from '../graphql/mutations/UnfavouriteTrack.js'
 import Preview from './Preview'
 import FavouriteButton from './FavouriteButton'
 
-const Track = ({ track, favouriteTracks }) => {
+const Track = ({ favouriteTracks, track }) => {
   const [ favouriteTrack ] = useMutation(
     FAVOURITE_TRACK,
     { refetchQueries: () => [{ query: GET_FAVOURITE_TRACKS }] }
@@ -29,20 +29,26 @@ const Track = ({ track, favouriteTracks }) => {
   const { artists, album, name, previewUrl } = track
 
   const artistNames = artists.map((artist, index) => {
-    const link = <a href={artist.uri}>{artist.name}</a>
+    const link = (
+      <a href={artist.uri}>
+        {artist.name}
+      </a>
+    )
+    const key = `artist-${track.id}-${artist.name}`
+
     return artists.length - 1 !== index
-      ? <>{link}, </>
-      : link
+      ? <span key={key}>{link}, </span>
+      : <span key={key}>{link}</span>
   })
 
   const isFavourited = favouriteTracks.find((favouriteTrack) => favouriteTrack.id === track.id)
   
   return (
-    <li className='flex my-6'>
+    <li className='track flex my-6'>
       <div className='flex-shrink-0'>
         <div className='flex items-center'>
           <FavouriteButton isFavourited={isFavourited} name={name} favourite={favourite} unfavourite={unfavourite} />
-          <img className='w-12 h-12 md:w-24 md:h-24 rounded ml-1 md:ml-4' src={album.images[1].url}></img>
+          <img src={album.images[1].url}></img> {/* [1] is the 300x300 image */}
         </div>
       </div>
       <div className='md:flex items-start justify-between w-full mx-1 md:m-4'>

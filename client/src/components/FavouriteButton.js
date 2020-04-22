@@ -4,7 +4,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 const FavouriteButton = ({ isFavourited, favourite, unfavourite, name }) => {
   if (isFavourited) return (
     <button onClick={unfavourite}>
-      <FaHeart className='text-pink-600 hover:text-pink-700 m-2' />
+      <FaHeart className='text-pink-600 hover:text-pink-600 m-2' />
       <span className='sr-only'>Unfavourite {name}</span>
     </button>
   )

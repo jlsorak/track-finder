@@ -4,15 +4,14 @@ import { FaHeart, FaMusic } from 'react-icons/fa'
 import SearchForm from './SearchForm'
 import Guitarist from '../assets/guitarist.png'
 
-
 const Header = ({
   searchTracks,
   searchTracksQueryInfo,
   setShowFavourites
 }) => {
   const favouritesButton = (
-    <button className='bg-white hover:bg-gray-200 font-bold rounded-lg py-2 px-4 float-right inline-flex items-center' onClick={() => setShowFavourites(true)}>
-      <FaHeart className='mr-1 text-pink-600' />
+    <button className='bg-white hover:bg-gray-200 font-bold rounded-lg py-2 px-4 float-right' onClick={() => setShowFavourites(true)}>
+      <FaHeart className='text-pink-600 inline-icon-left' />
       My Favourites
     </button>
   )
@@ -24,12 +23,11 @@ const Header = ({
   )
 
   return (
-    <header style={{ height: '75vh' }}>
+    <header className='header'>
       <img
         alt='Woman standing watching a LED light display in the shape of various musical instruments.'
         className='absolute object-cover min-w-full'
         src={Guitarist}
-        style={{ height: 'inherit', zIndex: -1 }}
       />
       <div className='flex flex-col h-full p-4'>
         <div>
@@ -37,9 +35,9 @@ const Header = ({
         </div>
         <div className='flex self-center items-center h-full md:pl-32 w-full'>
           <div className='p-4 rounded-lg md:w-1/2' style={{ backgroundColor: '#18191b' }}>
-            <h1 className='font-lg text-white text-2xl sm:text-4xl inline-flex items-center'>
+            <h1 className='text-white'>
               Track finder
-              <FaMusic className='ml-1 text-3xl' />
+              <FaMusic className='text-3xl inline-icon-right' />
             </h1>
             <div className='text-white mb-4'>Enter a song title below to search for songs.</div>
             <SearchForm searchTracks={searchTracks} searchTracksQueryInfo={searchTracksQueryInfo} setShowFavourites={setShowFavourites} />
