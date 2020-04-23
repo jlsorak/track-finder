@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from 'apollo-boost'
 
 const FavouriteTracks = gql`
   query {
@@ -18,7 +18,6 @@ const FavouriteTracks = gql`
         }
         uri
       }
-      durationMs
       previewUrl
       uri
     }

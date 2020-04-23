@@ -6,7 +6,6 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import './index.css'
 import App from './App'
 
-
 const client = new ApolloClient()
 
 ReactDOM.render(

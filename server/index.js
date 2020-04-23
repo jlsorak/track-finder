@@ -3,9 +3,9 @@ const { ApolloServer, ApolloError, gql } = require('apollo-server-express')
 
 require('./db/connection')
 const FavouriteTracks = require('./db/models/FavouriteTracks')
-const SpotifyAPI = require('./datasources/SpotifyAPI');
+const SpotifyAPI = require('./datasources/SpotifyAPI')
 
-// Schema using GraphQL schema language 
+// Schema using GraphQL schema language
 const typeDefs = gql`
   type Query {
     favouriteTracks: [Track]
@@ -43,7 +43,7 @@ const typeDefs = gql`
     width: Int
     url: String
   }
-`;
+`
 
 // Resolver functions for our schema fields
 const resolvers = {
@@ -59,7 +59,7 @@ const resolvers = {
         const trackIds = favourites.map((favourite) => favourite.trackId)
         const tracks = dataSources.SpotifyAPI.getTracks(trackIds)
         return tracks
-      } 
+      }
       return []
     },
     searchTracks: async (_, { searchTerm }, { dataSources }) => {
@@ -74,7 +74,7 @@ const resolvers = {
       } catch (error) {
         throw new ApolloError('Database create operation failed', null, error)
       }
-      return { id }    
+      return { id }
     },
     unfavouriteTrack: async (_, { id }) => {
       try {
@@ -101,4 +101,3 @@ server.applyMiddleware({ app })
 app.listen({ port: 4000 }, () =>
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
 )
-

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { FaCompactDisc, FaUser} from 'react-icons/fa'
+import { FaCompactDisc, FaUser } from 'react-icons/fa'
 
 import GET_FAVOURITE_TRACKS from '../graphql/queries/FavouriteTrack.js'
 import FAVOURITE_TRACK from '../graphql/mutations/FavouriteTrack.js'
@@ -10,17 +10,17 @@ import Preview from './Preview'
 import FavouriteButton from './FavouriteButton'
 
 const Track = ({ favouriteTracks, track }) => {
-  const [ favouriteTrack ] = useMutation(
+  const [favouriteTrack] = useMutation(
     FAVOURITE_TRACK,
     { refetchQueries: () => [{ query: GET_FAVOURITE_TRACKS }] }
   )
-  const [ unfavouriteTrack ] = useMutation(
+  const [unfavouriteTrack] = useMutation(
     UNFAVOURITE_TRACK,
     { refetchQueries: () => [{ query: GET_FAVOURITE_TRACKS }] }
   )
 
   const favourite = () => {
-    favouriteTrack({ variables: { id: track.id }})
+    favouriteTrack({ variables: { id: track.id } })
   }
   const unfavourite = () => {
     unfavouriteTrack({ variables: { id: track.id } })
@@ -41,25 +41,25 @@ const Track = ({ favouriteTracks, track }) => {
       : <span key={key}>{link}</span>
   })
 
-  const isFavourited = favouriteTracks.find((favouriteTrack) => favouriteTrack.id === track.id)
-  
+  const isFavourited = favouriteTracks.find((favouriteTrack) => favouriteTrack.id === track.id) ? true : false
+
   return (
     <li className='track flex my-6'>
       <div className='flex-shrink-0'>
         <div className='flex items-center'>
           <FavouriteButton isFavourited={isFavourited} name={name} favourite={favourite} unfavourite={unfavourite} />
-          <img alt={`${album.name} album cover`} src={album.images[1].url}></img> {/* [1] is the 300x300 image */}
+          <img alt={`${album.name} album cover`} src={album.images[1].url} /> {/* [1] is the 300x300 image */}
         </div>
       </div>
       <div className='md:flex items-start justify-between w-full mx-1 md:m-4'>
         <div>
           <div className='font-bold text-lg'>{name}</div>
           <div className='mb-2'>
-            <FaUser className='inline mr-1 text-sm'/>{artistNames} 
+            <FaUser className='inline mr-1 text-sm' />{artistNames}
             <FaCompactDisc className='inline mr-1 ml-2 text-sm' /><a href={album.uri}>{album.name}</a>
           </div>
         </div>
-        <Preview previewUrl={previewUrl}/>
+        <Preview previewUrl={previewUrl} />
       </div>
     </li>
   )

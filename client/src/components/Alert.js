@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const Alert = ({ description, title }) => {
-
   return (
     <div className='alert' role='alert'>
       <strong className='font-bold'>{title} </strong>
@@ -13,7 +12,7 @@ const Alert = ({ description, title }) => {
 
 Alert.propTypes = {
   title: PropTypes.string,
-  description: PropTypes.string,
+  description: PropTypes.string
 }
 
 export default Alert

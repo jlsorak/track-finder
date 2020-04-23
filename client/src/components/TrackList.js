@@ -1,17 +1,17 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { FaHeartBroken} from 'react-icons/fa'
+import { FaHeartBroken } from 'react-icons/fa'
 
 import GET_FAVOURITE_TRACKS from '../graphql/queries/FavouriteTrack.js'
 
 import Track from './Track'
 
 const TrackList = ({ searchedTracks, searchedTracksLoading, showFavourites }) => {
-  const { 
-    loading: favouriteTracksLoading, 
-    data = { favouriteTracks: {} } 
+  const {
+    loading: favouriteTracksLoading,
+    data = { favouriteTracks: [] }
   } = useQuery(GET_FAVOURITE_TRACKS)
-  const favouriteTracks = data.favouriteTracks || []
+  const favouriteTracks = data.favouriteTracks
 
   let listTitle
   let tracksToDisplay = []
@@ -22,14 +22,15 @@ const TrackList = ({ searchedTracks, searchedTracksLoading, showFavourites }) =>
     tracksToDisplay = searchedTracks
     listTitle = 'This is what we found...'
   }
-  if (!tracksToDisplay.length) listTitle = <><FaHeartBroken className='inline-icon-left text-pink-600' /> No songs favourited yet. Make a search above to start finding songs you like.</>
 
+  if (!tracksToDisplay.length) listTitle = <><FaHeartBroken className='inline-icon-left text-pink-600' /> No songs favourited yet. Make a search above to start finding songs you like.</>
+  
   const isLoading = searchedTracksLoading || favouriteTracksLoading
 
   return (
     <>
       <h2 className='text-2xl mt-16'>{isLoading ? 'Loading...' : listTitle}</h2>
-      {tracksToDisplay.length > 0 && 
+      {tracksToDisplay.length > 0 &&
         <ul>
           {tracksToDisplay.map((track) => {
             return <Track track={track} favouriteTracks={favouriteTracks} key={track.id} />

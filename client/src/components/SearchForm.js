@@ -1,22 +1,24 @@
 import React, { useState } from 'react'
-import { FaChevronRight} from 'react-icons/fa'
+import { FaChevronRight } from 'react-icons/fa'
 
 import Alert from './Alert'
 
 const SearchForm = ({ searchTracks, searchTracksQueryInfo = {}, setShowFavourites }) => {
-  const [ searchTerm, setSearchTerm ] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
-    !searchTracksQueryInfo.loading && searchTracks({ variables: { searchTerm }})
-    setShowFavourites(false)
+    if (!searchTracksQueryInfo.loading && searchTerm) {
+      searchTracks({ variables: { searchTerm } })
+      setShowFavourites(false)
+    }
   }
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={handleFormSubmit} data-testid='form'>
       {searchTracksQueryInfo.error && (
         <Alert
-          title='Search failed!'
           description={'We\'re unable to search that track right now.'}
+          title='Search failed!'
         />
       )}
       <div className='flex'>

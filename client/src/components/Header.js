@@ -9,7 +9,7 @@ const Header = ({
   searchTracksQueryInfo,
   setShowFavourites
 }) => {
-  const favouritesButton = (
+  const myFavouritesButton = (
     <button className='bg-white hover:bg-gray-200 font-bold rounded-lg py-2 px-4 float-right' onClick={() => setShowFavourites(true)}>
       <FaHeart className='text-pink-600 inline-icon-left' />
       My Favourites
@@ -24,7 +24,7 @@ const Header = ({
 
   return (
     <header className='header'>
-      <a className="skip-link bg-white" href='#main'>Skip to content</a>
+      <a className='skip-link bg-white' href='#main'>Skip to content</a>
       <img
         alt='Woman standing watching a LED light display in the shape of various musical instruments.'
         className='absolute object-cover min-w-full'
@@ -32,7 +32,7 @@ const Header = ({
       />
       <div className='flex flex-col h-full p-4'>
         <nav>
-          {favouritesButton}
+          {myFavouritesButton}
         </nav>
         <div className='flex self-center items-center h-full md:pl-32 w-full' role='search'>
           <div className='p-4 rounded-lg md:w-1/2' style={{ backgroundColor: '#18191b' }}>
