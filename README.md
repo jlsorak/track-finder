@@ -1,7 +1,7 @@
 # track-finder
 A React &amp; GraphQL web app to find and favourite Spotify tracks.
 
-![A desktop and mobile screenshot of the Track Finder App](trackFinderScreenshot.png?raw=true)
+![A desktop and mobile screenshot of the Track Finder app](trackFinderScreenshot.png?raw=true)
 
 # Getting started
 These instructions will get you up and running on your local machine.
@@ -18,11 +18,19 @@ For more details, see the [MongoDB intall guide](https://docs.mongodb.com/manual
 ## Installing and starting
 Clone the project and navigate to the directory:
 ```
-git checkout git@github.com:jlsorak/track-finder.git
+git clone git@github.com:jlsorak/track-finder.git
 cd track-finder
 ```
 
-You will need to run commands in both the client and server directories so you will need 2 terminal windows for this:
+You will need 2 terminal windows for the next part as you need to run commands in the client and server directories:
+
+### Server
+To authenticate with the [Spotify API](https://developer.spotify.com/documentation/web-api/) you need a client ID and secret. I can provide these for you or you can get them by signing up for a [Spotify developer account](https://developer.spotify.com/dashboard/#). I just can't commit them to Github for security reasons. Once you have these you can start the server with them:
+```
+cd server
+npm install
+SPOTIFY_CLIENT_ID=[client id goes here] SPOTIFY_CLIENT_SECRET=[client secret goes here] npm run start
+```
 
 ### Client
 ```
@@ -30,16 +38,7 @@ cd client
 npm install
 npm run start
 ```
-
-### Server
-```
-cd server
-npm install
-```
-To authenticate with the [Spotify API](https://developer.spotify.com/documentation/web-api/) you need a client ID and secret. I can provide these for you or you can get them by signing up for a [Spotify developer account](https://developer.spotify.com/dashboard/#). I just can't commit them to Github for security reasons. Once you have these you can start the server with them:
-```
-SPOTIFY_CLIENT_ID=[client id goes here] SPOTIFY_CLIENT_SECRET=[client secret goes here] npm run start
-```
+This should then open the app at `http://localhost:3000/`
 
 ## Running the tests
 Currently, only the frontend contains tests. You can run these by using:
@@ -47,6 +46,7 @@ Currently, only the frontend contains tests. You can run these by using:
 cd client
 npm run test
 ```
+By default, this will only run the tests changed since the last commit, so you will need to press `a` on your keyboard once the test runner has started to run all the tests.
 
 # Client
 The initial boilerplate code comes from [Create React App (CRA)](https://github.com/facebook/create-react-app) which will make future maintenance easier (updating `React-Scripts`). 
@@ -107,10 +107,10 @@ The server is running the [Express integration](https://github.com/apollographql
 ## Queries and Mutations
 The server exposes 2 queries and 2 mutations to fetch and manipulate data for our app.
 
-`favouriteTracks` - a query that fetches the user's favourite tracks from the database
-`searchTracks` - a query that takes a search term and uses it to search Spotify's API for a track
-`favouriteTrack` - a mutation that takes a track's id and saves this to the database
-`unfavouriteTrack` - a mutation that takes a track's id and deletes it from the database, if it exists
+`favouriteTracks` - a query that fetches the user's favourite tracks from the database  
+`searchTracks` - a query that takes a search term and uses it to search Spotify's API for a track  
+`favouriteTrack` - a mutation that takes a track's id and saves this to the database  
+`unfavouriteTrack` - a mutation that takes a track's id and deletes it from the database, if it exists  
 
 ## Database
 A MongoDB database is used to save the user's 'favourite tracks'. I have used [Mongoose](https://mongoosejs.com/), and ODM (Object Document Mapper) which enables us to define and validate schemas for our modelled data. The schema is very simple (one field in fact!) at the moment so this is wasn't vital, but it certainly helps if the app were to be expanded and more data was stored.
